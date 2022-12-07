@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# kill-port: Kill all processes that are attached to a given port.
+#
+# Syntax:
+#
+#     kill-port <port-number> <rest...>
+#
+# Example:
+#
+#     kill-port 1000 -9
+#
+# Tracking:
+#
+#   * Package: kill-port
+#   * Version: 1.0.0
+#   * Created: 2022-12-07T18:43:04Z
+#   * Updated: 2022-12-07T18:43:04Z
+#   * License: GPL-2.0-or-later or contact us for custom license
+#   * Contact: Joel Parker Henderson (joel@sixarm.com)
+#
+
+int() {
+        printf %s\\n "$1" | awk '{ print int($0); exit }'
+}
+
+port=$(int "$1")
+shift
+lsof -ti:"$port" | xargs kill "$@"
